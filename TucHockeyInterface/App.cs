@@ -14,6 +14,37 @@ public interface IHockeyPlayerRepository
     List<Player> ListAllPlayers();
 }
 
+public class DatabaseHockeyPlayerRepository : IHockeyPlayerRepository
+{
+    private List<Player> players = new List<Player>();
+    public void AddPlayer(Player player)
+    {
+        int last = 0;
+        foreach (var p in players)
+            if (p.Id > last)
+                last = p.Id;
+        last = last + 1;
+        player.Id = last;
+        players.Add(player);
+    }
+    public void UpdatePlayer(Player player)
+    {
+        foreach (var p in players)
+            if (p.Id == player.Id)
+            {
+                p.Age = player.Age;
+                p.Jersey = player.Jersey;
+                p.Name = player.Name;
+            }
+
+    }
+
+    public List<Player> ListAllPlayers()
+    {
+        return players;
+    }
+}
+
 public class FileHockeyRepository : IHockeyPlayerRepository
 {
     public void AddPlayer(Player player)
@@ -52,6 +83,8 @@ public class FileHockeyRepository : IHockeyPlayerRepository
 
     }
 
+
+
     public List<Player> ListAllPlayers()
     {
         var list = new List<Player>();
@@ -76,7 +109,8 @@ public class App
 {
     public void Run()
     {
-        IHockeyPlayerRepository repository = new FileHockeyRepository();
+        //IHockeyPlayerRepository repository = new FileHockeyRepository();
+        IHockeyPlayerRepository repository = new DatabaseHockeyPlayerRepository();
         while (true)
         {
             Console.WriteLine("1. Add player");
