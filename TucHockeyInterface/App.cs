@@ -37,9 +37,9 @@ public class App
             if (sel == "1")
             {
                 Player player = new Player();
-                Console.WriteLine("Namn:")
+                Console.WriteLine("Namn:");
                 player.Name = Console.ReadLine();
-                Console.WriteLine("Age:")
+                Console.WriteLine("Age:");
                 player.Age = Convert.ToInt32(Console.ReadLine());
                 repository.AddPlayer(player);
             }
